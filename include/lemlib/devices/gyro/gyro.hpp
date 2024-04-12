@@ -7,16 +7,14 @@
 namespace lemlib {
 
 class AnyGyro {
-    template <typename T>
-    AnyGyro(TypeErasedGyro<T> gyro) : poly_gyro(new TypeErasedGyro<T>(std::move(gyro)) {}
-
+    private:
+        struct IGyro;
+       template <typename T> struct TypeErasedGyro;
+    public:
+        template <typename T>
+        AnyGyro(TypeErasedGyro<T> gyro) : poly_gyro(new TypeErasedGyro<T>(std::move(gyro))) {}
     private:
         std::unique_ptr<IGyro> poly_gyro;
-        template <typename T>
-        struct TypeErasedGyro : IGyro {
-            T actual_gyro;
-            TypeErasedGyro(T _actual_gyro): actual_gyro(_actual_gyro) {}
-        };
         struct IGyro {
             /**
             * @brief Calibrate the gyro
@@ -80,6 +78,12 @@ class AnyGyro {
             * @return change in angle rotated by the encoder, in radians
             */
             float getRotationDelta(bool update = true);
+        };
+
+        template <typename T>
+        struct TypeErasedGyro : IGyro {
+            T actual_gyro;
+            TypeErasedGyro(T _actual_gyro): actual_gyro(_actual_gyro) {}
         };
 };
 
