@@ -6,6 +6,14 @@
 
 namespace lemlib {
 
+template <typename T> bool gyroCalibrate(const T& gyro, bool blocking = false);
+template <typename T> bool gyroIsCalibrating(const T& gyro);
+template <typename T> bool gyroIsCalibrated(const T& gyro);
+template <typename T> bool gyroIsConnected(const T& gyro);
+template <typename T> float gyroGetHeading(const T& gyro);
+template <typename T> bool gyroGetRotation(const T& gyro);
+template <typename T> void gyroSetRotation(const T& gyro, float rotation);
+
 class AnyGyro {
     private:
         struct IGyro;
@@ -88,11 +96,19 @@ class AnyGyro {
         };
         template <typename T>
         struct TypeErasedGyro : IGyro {
-            T actual_gyro;
+            mutable T actual_gyro;
             TypeErasedGyro(T _actual_gyro): actual_gyro(_actual_gyro) {}
-            bool calibrate(bool blocking = false) override { actual_gyro.calibrate(blocking); }
+            bool calibrate(bool blocking = false) override { return gyroCalibrate(actual_gyro, blocking); }
+            bool isCalibrating() const override { return gyroIsCalibrating(actual_gyro); }
+            bool isCalibrated() const override { return gyroIsCalibrated(actual_gyro); }
+            bool isConnected() const override { return gyroIsConnected(actual_gyro); }
+            float getHeading() const override { return gyroGetHeading(actual_gyro); }
+            float getRotation() const override { return gyroGetRotation(actual_gyro); }
+            void setRotation(float rotation) override { return gyroSetRotation(actual_gyro, rotation); }
+            TypeErasedGyro<T>* clone() const override { return new TypeErasedGyro<T>{actual_gyro}; }
         };
 };
+
 
 class Gyro {
     public:

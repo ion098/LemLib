@@ -1,8 +1,25 @@
 #include <cmath>
+#include "gyro.hpp"
 #include "lemlib/util.hpp"
 #include "lemlib/devices/gyro/imu.hpp"
 
 namespace lemlib {
+
+template <> bool gyroCalibrate<pros::Imu>(const pros::Imu& gyro, bool blocking) {
+    return gyro.reset(blocking);
+}
+
+template <> bool gyroIsCalibrated<pros::Imu>(const pros::Imu& gyro) {
+    return !gyro.is_calibrating();
+}
+
+template <> bool gyroIsCalibrating<pros::Imu>(const pros::Imu& gyro) {
+    return gyro.is_calibrating();
+}
+
+
+
+
 /**
  * Construct a new Imu
  *
