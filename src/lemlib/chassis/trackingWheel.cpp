@@ -41,7 +41,7 @@ lemlib::TrackingWheel::TrackingWheel(pros::Rotation* encoder, float wheelDiamete
  * @param distance half the track width of the drivetrain in inches
  * @param rpm theoretical maximum rpm of the drivetrain wheels
  */
-lemlib::TrackingWheel::TrackingWheel(pros::Motor_Group* motors, float wheelDiameter, float distance, float rpm) {
+lemlib::TrackingWheel::TrackingWheel(pros::MotorGroup* motors, float wheelDiameter, float distance, float rpm) {
     this->motors = motors;
     this->motors->set_encoder_units(pros::E_MOTOR_ENCODER_ROTATIONS);
     this->diameter = wheelDiameter;

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "pros/motor_group.hpp"
 #include "pros/motors.hpp"
 #include "pros/adi.hpp"
 #include "pros/rotation.hpp"
@@ -35,7 +36,7 @@ class TrackingWheel {
          * @param distance distance between the tracking wheel and the center of rotation in inches
          * @param gearRatio gear ratio of the tracking wheel, defaults to 1
          */
-        TrackingWheel(pros::ADIEncoder* encoder, float wheelDiameter, float distance, float gearRatio = 1);
+        TrackingWheel(pros::adi::Encoder* encoder, float wheelDiameter, float distance, float gearRatio = 1);
         /**
          * @brief Create a new tracking wheel
          *
@@ -53,7 +54,7 @@ class TrackingWheel {
          * @param distance half the track width of the drivetrain in inches
          * @param rpm theoretical maximum rpm of the drivetrain wheels
          */
-        TrackingWheel(pros::Motor_Group* motors, float wheelDiameter, float distance, float rpm);
+        TrackingWheel(pros::MotorGroup* motors, float wheelDiameter, float distance, float rpm);
         /**
          * @brief Reset the tracking wheel position to 0
          *
@@ -81,9 +82,9 @@ class TrackingWheel {
         float diameter;
         float distance;
         float rpm;
-        pros::ADIEncoder* encoder = nullptr;
+        pros::adi::Encoder* encoder = nullptr;
         pros::Rotation* rotation = nullptr;
-        pros::Motor_Group* motors = nullptr;
+        pros::MotorGroup* motors = nullptr;
         float gearRatio = 1;
 };
 } // namespace lemlib

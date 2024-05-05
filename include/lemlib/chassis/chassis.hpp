@@ -97,8 +97,8 @@ struct Drivetrain {
          */
         Drivetrain(pros::MotorGroup* leftMotors, pros::MotorGroup* rightMotors, float trackWidth, float wheelDiameter,
                    float rpm, float chasePower);
-        pros::Motor_Group* leftMotors;
-        pros::Motor_Group* rightMotors;
+        pros::MotorGroup* leftMotors;
+        pros::MotorGroup* rightMotors;
         float trackWidth;
         float wheelDiameter;
         float rpm;
